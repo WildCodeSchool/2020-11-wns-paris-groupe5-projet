@@ -1,4 +1,5 @@
 const StudentModel = require("../models/Student");
+const { sendSingleEmail } = require('../utils/sendEmail');
 
 module.exports = {
   getAllStudents: async (req, res) => {
@@ -17,6 +18,20 @@ module.exports = {
       const student = new StudentModel(req.body);
       await student.save();
       res.send(student);
+    } catch (e) {
+      console.log("e", e);
+      res.status(500).send();
+    }
+  },
+  sendEmail: async (req, res) => {
+    try {
+      const response = await sendSingleEmail(req.body);
+      console.log("response", response)
+      if(response.messageId) {
+        res.send({ success: "Message envoyé"});
+      } else {
+        res.status(500).send();
+      }
     } catch (e) {
       console.log("e", e);
       res.status(500).send();
