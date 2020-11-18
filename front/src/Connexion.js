@@ -1,24 +1,30 @@
 import React, { useEffect, useState } from "react";
-
-const axios = require("axios");
-
-const fetchData = async () => {
-    try {
-      const result = await axios("http://localhost:5000/?");
-      console.log(result);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+import axios from "axios";
+import Student from "./Student";
 
 function Connexion() {
-    const [data, setData] = useState({ students: [] });
-    useEffect(() => {
-      fetchData();
-    }, []);
+  
+  const [students, setStudents] = useState([]);
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const result = await axios("http://localhost:5000/api/students/");
+        setStudents(result.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchStudents();
+  }, []);
 
   return (
-    <div>Component Connexion works</div>
+      <div>
+          {students.map((student) => (
+            <Student key={student._id} {...student} />
+          ))}
+      </div>
   );
 }
 

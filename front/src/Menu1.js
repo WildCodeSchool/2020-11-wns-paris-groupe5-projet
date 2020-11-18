@@ -7,6 +7,7 @@ import {
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
+import Connexion from "./Connexion";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -105,18 +106,9 @@ class Menu1 extends React.Component {
                 <Breadcrumb.Item>Formateur</Breadcrumb.Item>
               </Breadcrumb>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-              <div style={{ marginBottom: 16 }}>
-          <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading}>
-            Reload
-          </Button>
-          <span style={{ marginLeft: 8 }}>
-            {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
-          </span>
-        </div>
-        <Table 
-        rowSelection={rowSelection} // case à cocher
-        columns={columns} 
-        dataSource={data} />
+
+              <Connexion />
+
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Hello from GROUPE 5</Footer>
