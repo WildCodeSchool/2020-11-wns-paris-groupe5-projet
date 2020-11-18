@@ -19,3 +19,7 @@ Récupérer son API Username et API Password<br />
 Dans le .env ajouter :<br />
 SMS_USER="API Username"<br />
 SMS_PASS="API Password"
+
+## Run node server
+cd back <br />
+npm start 
