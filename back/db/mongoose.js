@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 
 mongoose.connect("mongodb://localhost:27017/testdb", {
-    "auth": { "authSource": "admin" },
+    "auth":process.env.DB_USER ? { "authSource": "admin" }: "",
     "user": process.env.DB_USER,
     "pass": process.env.DB_PASS,
     useNewUrlParser: true,
