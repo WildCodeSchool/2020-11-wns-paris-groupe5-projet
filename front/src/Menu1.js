@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu, Breadcrumb, Table, Button } from 'antd';
 import {
   DesktopOutlined,
   PieChartOutlined,
@@ -11,17 +11,54 @@ import {
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-//function Menu() {
-//  return (
-//    <div>Component Menu works</div>
-//  );
-//}
+const columns = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+  },
+  {
+    title: 'Age',
+    dataIndex: 'age',
+  },
+  {
+    title: 'Address',
+    dataIndex: 'address',
+  },
+];
+
+const data = [];
+for (let i = 0; i < 46; i++) {
+  data.push({
+    key: i,
+    name: `Edward King ${i}`,
+    age: 32,
+    address: `London, Park Lane no. ${i}`,
+  });
+}
 
 class Menu1 extends React.Component {
     state = {
       collapsed: false,
+      selectedRowKeys: [], // Check here to configure the default column
+      loading: false,
+    };
+    
+    start = () => {
+      this.setState({ loading: true });
+      // ajax request after empty completing
+      setTimeout(() => {
+        this.setState({
+          selectedRowKeys: [],
+          loading: false,
+        });
+      }, 1000);
     };
   
+    onSelectChange = selectedRowKeys => {
+      console.log('selectedRowKeys changed: ', selectedRowKeys);
+      this.setState({ selectedRowKeys });
+    };
+
     onCollapse = collapsed => {
       console.log(collapsed);
       this.setState({ collapsed });
@@ -29,6 +66,12 @@ class Menu1 extends React.Component {
   
     render() {
       const { collapsed } = this.state;
+      const { loading, selectedRowKeys } = this.state;
+      const rowSelection = {
+      selectedRowKeys,
+      onChange: this.onSelectChange,
+      };
+      const hasSelected = selectedRowKeys.length > 0;
       return (
         <Layout style={{ minHeight: '100vh' }}>
           <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
@@ -62,7 +105,18 @@ class Menu1 extends React.Component {
                 <Breadcrumb.Item>Formateur</Breadcrumb.Item>
               </Breadcrumb>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                Content
+              <div style={{ marginBottom: 16 }}>
+          <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading}>
+            Reload
+          </Button>
+          <span style={{ marginLeft: 8 }}>
+            {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
+          </span>
+        </div>
+        <Table 
+        rowSelection={rowSelection} // case à cocher
+        columns={columns} 
+        dataSource={data} />
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Hello from GROUPE 5</Footer>
