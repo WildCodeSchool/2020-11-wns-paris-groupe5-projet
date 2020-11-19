@@ -20,11 +20,7 @@ function Connexion() {
   }, []);
 
   return (
-      <div>
-          {students.map((student) => (
-            <Student key={student._id} {...student} />
-          ))}
-      </div>
+        <Student data={students} />
   );
 }
 
