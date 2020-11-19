@@ -1,6 +1,7 @@
 const request = require("request");
 const StudentModel = require("../models/Student");
 const { sendSingleEmail } = require("../utils/sendEmail");
+const StudentPresenceModel = require("../models/StudentPresence");
 
 module.exports = {
   getAllStudents: async (req, res) => {
@@ -76,6 +77,18 @@ module.exports = {
 
       res.send({ student, message: "student deleted" });
     } catch (e) {
+      res.status(500).send();
+    }
+  },
+  setStudentsPresence: async (req, res) => {
+    try {
+      const students = req.body;
+      const studentsPresence = new StudentPresenceModel(students);
+      await studentsPresence.save();
+
+      res.send({ success: true, message: "list saved" });
+    } catch (e) {
+      console.log("error saving records", e);
       res.status(500).send();
     }
   },
