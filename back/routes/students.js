@@ -7,6 +7,7 @@ console.log("students.getAllWilders", students.getAllStudents)
 
 router.get("/api/students", students.getAllStudents);
 router.post("/api/student/create", students.create);
+router.put("/api/student/update/:id", students.update);
 router.post("/api/student/sendEmail", students.sendEmail);
 router.post("/api/student/sendSms", students.sendSms);
 router.post("/api/students/saveRecords", students.setStudentsPresence);

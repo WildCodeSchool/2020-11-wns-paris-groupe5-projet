@@ -80,6 +80,20 @@ module.exports = {
       res.status(500).send();
     }
   },
+  update: async (req, res) => {
+    try {
+      const update = req.body;
+      const student = await StudentModel.findByIdAndUpdate(req.params.id, { $set: update });
+
+      if (!student) {
+        res.status(404).send();
+      }
+
+      res.send({ student, message: "student updated" });
+    } catch (e) {
+      res.status(500).send();
+    }
+  },
   setStudentsPresence: async (req, res) => {
     try {
       const students = req.body;
