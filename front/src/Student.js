@@ -12,6 +12,7 @@ function Student(props) {
     function onChange(e) {
         console.log(`checked = ${e.target.checked}`);
       }
+    console.log(props.data)
 
   return (
     <div>
@@ -29,14 +30,11 @@ function Student(props) {
     <Column
       title="Action"
       key="action"
-      render={(text, record) => (
-        <span>
-          <Button type="primary">Envoyer un message à {record.firstName}</Button>
-          <Divider type="vertical" />
-          <Checkbox onChange={onChange}>Absent</Checkbox>
-          <Checkbox onChange={onChange}>Présent</Checkbox>
-        </span>
-      )}
+      render={(text, record) => {
+        console.log("record.email", record.email)
+        return (
+          <Button onClick={ () => props.sendEmail(record.email) } type="primary">Envoyer un message à {record.firstName}</Button>
+      )}}
     />
   </Table>
   </div>
