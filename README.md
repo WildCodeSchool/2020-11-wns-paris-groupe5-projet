@@ -13,7 +13,7 @@ GMAIL_PASS=emailpassword <br />
 Il faut aller sur ce lien et autoriser les applications moins sécurisées pour pouvoir utiliser nodemailer avec son gmail <br />
 
 Lien vers la documentation:  [Documentation](https://nodemailer.com/usage/using-gmail/)<br />
-Lien vers l'inscription pour obtenir les identifiants : https://myaccount.google.com/lesssecureapps?pli=1&rapt=AEjHL4NAoSKWSNIcnWC5jSphQocegrE2Tq3vJvAfzBhwtGpxXAHxhQsyBcYfJAN1VL9fy4w6GKoCFPYCTcA53mh5UHdhAxGu_g
+Lien vers l'inscription pour obtenir les identifiants : [Cliquez ici](https://myaccount.google.com/lesssecureapps?pli=1&rapt=AEjHL4NAoSKWSNIcnWC5jSphQocegrE2Tq3vJvAfzBhwtGpxXAHxhQsyBcYfJAN1VL9fy4w6GKoCFPYCTcA53mh5UHdhAxGu_g)
 
 ## Envoi de sms
 Créer un compte gratuitement [ici](https://dashboard.d7networks.com/sms-api)
