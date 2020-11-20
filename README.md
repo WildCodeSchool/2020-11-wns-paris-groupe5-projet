@@ -9,7 +9,7 @@ GMAIL_EMAIL=gmailSender <br />
 GMAIL_PASS=emailpassword <br />
 
 
-## Envoi de mail à partir de son gmail
+## Envoi de mail à partir de son compte Gmail
 Aller sur le 2e lien et autoriser les applications moins sécurisées pour pouvoir utiliser Nodemailer avec son Gmail <br />
 
 Lien vers la documentation:  [Documentation](https://nodemailer.com/usage/using-gmail/)<br />
