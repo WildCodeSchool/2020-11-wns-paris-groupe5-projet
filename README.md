@@ -20,7 +20,7 @@ Créer un compte gratuitement [en cliquant ici](https://dashboard.d7networks.com
 
 Récupérer son API Username et API Password<br />
 
-Dans le .env ajouter :<br />
+Dans le fichier .env ajouter :<br />
 SMS_USER="API Username"<br />
 SMS_PASS="API Password"
 
