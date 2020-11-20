@@ -2,6 +2,7 @@
 
 ## Create env file at the root to send email notifications
 Ajouter ce code dans le .env :
+
 DB_USER=dbUser <br />
 DB_PASS=databasepassword <br />
 GMAIL_EMAIL=gmailSender <br />
