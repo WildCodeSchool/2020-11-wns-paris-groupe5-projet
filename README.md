@@ -16,8 +16,10 @@ Lien vers la documentation:  [Documentation](https://nodemailer.com/usage/using-
 Lien vers l'autorisation Gmail : [Cliquez ici](https://myaccount.google.com/lesssecureapps?pli=1&rapt=AEjHL4NAoSKWSNIcnWC5jSphQocegrE2Tq3vJvAfzBhwtGpxXAHxhQsyBcYfJAN1VL9fy4w6GKoCFPYCTcA53mh5UHdhAxGu_g)
 
 ## Envoi de sms
-Créer un compte gratuitement [ici](https://dashboard.d7networks.com/sms-api)
+Créer un compte gratuitement [en cliquant ici](https://dashboard.d7networks.com/sms-api)
+
 Récupérer son API Username et API Password<br />
+
 Dans le .env ajouter :<br />
 SMS_USER="API Username"<br />
 SMS_PASS="API Password"
