@@ -1,18 +1,10 @@
 import React from "react";
-import { Checkbox } from 'antd';
 import { Button } from 'antd';
-
-import { Table, Divider } from 'antd';
+import { Table } from 'antd';
 
 const { Column } = Table;
 
-
 function Student(props) {
-    console.log(props)
-    function onChange(e) {
-        console.log(`checked = ${e.target.checked}`);
-      }
-    console.log(props.data)
 
   return (
     <div>
