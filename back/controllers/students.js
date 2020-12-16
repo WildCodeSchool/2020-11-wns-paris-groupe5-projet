@@ -19,10 +19,11 @@ module.exports = {
       await StudentModel.init();
       const student = new StudentModel(req.body);
       await student.save();
-      res.send(student);
+      const token = await student.generateAuthToken();
+      res.status(201).send({ student, token });
     } catch (e) {
       console.log("e", e);
-      res.status(500).send();
+      res.status(500).send(e);
     }
   },
   sendEmail: async (req, res) => {
