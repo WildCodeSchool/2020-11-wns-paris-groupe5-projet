@@ -1,5 +1,5 @@
 const request = require("request");
-const StudentModel = require("../models/Student");
+const UserModel = require("../models/User");
 const { sendSingleEmail } = require("../utils/sendEmail");
 const StudentPresenceModel = require("../models/StudentPresence");
 
@@ -7,7 +7,7 @@ module.exports = {
   getAllStudents: async (req, res) => {
     console.log("getAllWilders called");
     try {
-      const students = await StudentModel.find({});
+      const students = await UserModel.find({});
       res.send(students);
     } catch (e) {
       console.log("e", e);
@@ -16,11 +16,11 @@ module.exports = {
   },
   create: async (req, res) => {
     try {
-      await StudentModel.init();
-      const student = new StudentModel(req.body);
-      await student.save();
-      const token = await student.generateAuthToken();
-      res.status(201).send({ student, token });
+      await UserModel.init();
+      const user = new UserModel(req.body);
+      await user.save();
+      const token = await user.generateAuthToken();
+      res.status(201).send({ user, token });
     } catch (e) {
       console.log("e", e);
       res.status(500).send(e);
@@ -42,7 +42,7 @@ module.exports = {
   sendSms: async (req, res) => {
     try {
       const id = req.body.id;
-      const student = await StudentModel.findOne({ _id: id });
+      const student = await UserModel.findOne({ _id: id });
       if (student.phoneNumber) {
         const options = {
           method: "POST",
@@ -70,7 +70,7 @@ module.exports = {
   },
   delete: async (req, res) => {
     try {
-      const student = await StudentModel.findOneAndDelete({ _id: req.params.id });
+      const student = await UserModel.findOneAndDelete({ _id: req.params.id });
 
       if (!student) {
         res.status(404).send();
@@ -84,13 +84,13 @@ module.exports = {
   update: async (req, res) => {
     try {
       const update = req.body;
-      const student = await StudentModel.findByIdAndUpdate(req.params.id, { $set: update });
+      const user = await UserModel.findByIdAndUpdate(req.params.id, { $set: update });
 
-      if (!student) {
+      if (!user) {
         res.status(404).send();
       }
 
-      res.send({ student, message: "student updated" });
+      res.send({ user, message: "student updated" });
     } catch (e) {
       res.status(500).send();
     }
