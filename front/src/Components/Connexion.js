@@ -19,9 +19,9 @@ function Connexion() {
     fetchStudents();
   }, []);
   if(students.length) {
-
     console.log("students0", students[0]._id)
   }
+
   const sendEmail = async (email) => {
     try {
       return await axios.post("http://localhost:5000/api/student/sendEmail", 
