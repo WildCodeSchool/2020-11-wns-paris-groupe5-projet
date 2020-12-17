@@ -1,59 +1,19 @@
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
+import React from "react";
 import { Link } from "react-router-dom";
 import "antd/dist/antd.css";
 import {
   Form,
   Input,
   Tooltip,
-  Cascader,
   Menu,
   Layout,
   Select,
-  Row,
-  Col,
-  Checkbox,
   Button,
-  AutoComplete,
 } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
-const { Header, Content, Footer, Sider } = Layout;
+const { Header } = Layout;
 const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
-const residences = [
-  {
-    value: "zhejiang",
-    label: "Zhejiang",
-    children: [
-      {
-        value: "hangzhou",
-        label: "Hangzhou",
-        children: [
-          {
-            value: "xihu",
-            label: "West Lake",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: "jiangsu",
-    label: "Jiangsu",
-    children: [
-      {
-        value: "nanjing",
-        label: "Nanjing",
-        children: [
-          {
-            value: "zhonghuamen",
-            label: "Zhong Hua Men",
-          },
-        ],
-      },
-    ],
-  },
-];
+
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -105,22 +65,8 @@ const RegistrationForm = () => {
       </Select>
     </Form.Item>
   );
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
 
-  const onWebsiteChange = (value) => {
-    if (!value) {
-      setAutoCompleteResult([]);
-    } else {
-      setAutoCompleteResult(
-        [".com", ".org", ".net"].map((domain) => `${value}${domain}`)
-      );
-    }
-  };
 
-  const websiteOptions = autoCompleteResult.map((website) => ({
-    label: website,
-    value: website,
-  }));
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Header className="header">
