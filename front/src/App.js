@@ -1,11 +1,18 @@
 import './App.css';
-import Menu1 from "./Menu1";
-
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import Home from "./Component/Home";
+import RegistrationForm from "./Component/RegistrationForm";
 
 function App() {
   return (
     <div className="App">
-        <Menu1 />
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/registrationForm" component={RegistrationForm} />
+          <Redirect to="/" />
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }
