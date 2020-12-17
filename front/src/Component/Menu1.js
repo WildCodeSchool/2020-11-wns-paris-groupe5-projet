@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
+import { Link } from "react-router-dom";
 import { Layout, Menu, Breadcrumb } from "antd";
 import {
   DesktopOutlined,
@@ -8,108 +8,122 @@ import {
   TeamOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { TableComponent } from "./TableComponent";
+import Connexion from "./Connexion";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-function Menu1() {
-  const [collapsed, setCollapsed] = React.useState(false);
-  const [students, setStudents] = useState([]);
+const columns = [
+  {
+    title: "Name",
+    dataIndex: "name",
+  },
+  {
+    title: "Age",
+    dataIndex: "age",
+  },
+  {
+    title: "Address",
+    dataIndex: "address",
+  },
+];
 
-  const onCollapse = (collapsed) => {
-    console.log(collapsed);
-    setCollapsed(false);
-    // this.setState({ collapsed });
+const data = [];
+for (let i = 0; i < 46; i++) {
+  data.push({
+    key: i,
+    name: `Edward King ${i}`,
+    age: 32,
+    address: `London, Park Lane no. ${i}`,
+  });
+}
+
+class Menu1 extends React.Component {
+  state = {
+    collapsed: false,
+    selectedRowKeys: [], // Check here to configure the default column
+    loading: false,
   };
 
-  const sendEmail = async (email) => {
-    try {
-      return await axios.post("http://localhost:5000/api/student/sendEmail", {
-        to: email,
-        subject: "Retard",
-        text: "Coucou, tu es en retard pour le cours",
+  start = () => {
+    this.setState({ loading: true });
+    // ajax request after empty completing
+    setTimeout(() => {
+      this.setState({
+        selectedRowKeys: [],
+        loading: false,
       });
-    } catch (e) {
-      console.log("error, error");
-    }
-  };
-  const sendSms = async (id) => {
-    try {
-      return await axios.post("http://localhost:5000/api/student/sendSms", { id });
-    } catch (e) {
-      console.log("error, error");
-    }
+    }, 1000);
   };
 
-  useEffect(() => {
-    const fetchStudents = async () => {
-      try {
-        const result = await axios("http://localhost:5000/api/students/");
-        console.log("result.data****", result.data);
-        const formatedData = result.data.map((elt) => {
-          return {
-            key: elt._id,
-            firstName: elt.firstName,
-            lastName: elt.lastName,
-            sendEmail: sendEmail,
-            sendSms: sendSms,
-            email: elt.email,
-            phoneNumber: elt.phoneNumber,
-          };
-        });
-        console.log("formatedData", formatedData);
-        setStudents(formatedData);
-      } catch (error) {
-        console.log(error);
-      }
+  onSelectChange = (selectedRowKeys) => {
+    console.log("selectedRowKeys changed: ", selectedRowKeys);
+    this.setState({ selectedRowKeys });
+  };
+
+  onCollapse = (collapsed) => {
+    console.log(collapsed);
+    this.setState({ collapsed });
+  };
+
+  render() {
+    const { collapsed } = this.state;
+    const { loading, selectedRowKeys } = this.state;
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: this.onSelectChange,
     };
-
-    fetchStudents();
-  }, []);
-
-  return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-        <div className="logo" />
-        <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-          <Menu.Item key="1" icon={<PieChartOutlined />}>
-            Menu Principal
-          </Menu.Item>
-          <Menu.Item key="2" icon={<DesktopOutlined />}>
-            Liste d'élèves
-          </Menu.Item>
-          <SubMenu key="sub1" icon={<UserOutlined />} title="Utilisateur">
-            <Menu.Item key="3">Vincent</Menu.Item>
-            <Menu.Item key="4">Ibra</Menu.Item>
-            <Menu.Item key="5">Walid</Menu.Item>
-          </SubMenu>
-          <SubMenu key="sub2" icon={<TeamOutlined />} title="Equipe">
-            <Menu.Item key="6">Team 1</Menu.Item>
-            <Menu.Item key="8">Team 2</Menu.Item>
-          </SubMenu>
-          <Menu.Item key="9" icon={<FileOutlined />}>
-            Exercices
-          </Menu.Item>
-        </Menu>
-      </Sider>
-      <Layout className="site-layout">
-        <Header className="site-layout-background" style={{ padding: 0 }} />
-        <Content style={{ margin: "0 16px" }}>
-          <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item>Utilisateur</Breadcrumb.Item>
-            <Breadcrumb.Item>Formateur</Breadcrumb.Item>
-          </Breadcrumb>
-          <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-            <div style={{ marginBottom: 16 }}></div>
-
-            <TableComponent data={students} sendEmail={sendEmail} />
-          </div>
-        </Content>
-        <Footer style={{ textAlign: "center" }}>Hello from GROUPE 5</Footer>
+    const hasSelected = selectedRowKeys.length > 0;
+    return (
+      <Layout style={{ minHeight: "100vh" }}>
+        <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
+          <div className="logo" />
+          <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
+            <Menu.Item key="1" icon={<PieChartOutlined />}>
+            <Link to='/'>Menu Principal</Link>
+            </Menu.Item>
+            <Menu.Item key="2" icon={<DesktopOutlined />}>
+              Liste d'élèves
+            </Menu.Item>
+            <SubMenu key="sub1" icon={<UserOutlined />} title="Utilisateur">
+              <Menu.Item key="3">Vincent</Menu.Item>
+              <Menu.Item key="4">Ibra</Menu.Item>
+              <Menu.Item key="5">Walid</Menu.Item>
+            </SubMenu>
+            <SubMenu key="sub2" icon={<TeamOutlined />} title="Equipe">
+              <Menu.Item key="6">Team 1</Menu.Item>
+              <Menu.Item key="8">Team 2</Menu.Item>
+            </SubMenu>
+            <Menu.Item key="9" icon={<FileOutlined />}>
+              Exercices
+            </Menu.Item>
+          </Menu>
+        </Sider>
+        <Layout className="site-layout">
+          <Header className="header">
+            <div className="logo" />
+            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
+              <Menu.Item key="1">Sign in</Menu.Item>
+              <Menu.Item key="2"><Link to='/registrationForm'>Sign up</Link></Menu.Item>
+            </Menu>
+          </Header>
+          <Content style={{ margin: "0 16px" }}>
+            <Breadcrumb style={{ margin: "16px 0" }}>
+              <Breadcrumb.Item>Utilisateur</Breadcrumb.Item>
+              <Breadcrumb.Item>Formateur</Breadcrumb.Item>
+            </Breadcrumb>
+            <div
+              className="site-layout-background"
+              style={{ padding: 24, minHeight: 360 }}
+            >
+              <Connexion />
+            </div>
+          </Content>
+          <Footer style={{ textAlign: "center" }}>Hello from GROUPE 5</Footer>
+        </Layout>
       </Layout>
-    </Layout>
-  );
+    );
+  }
 }
 
 export default Menu1;
