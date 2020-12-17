@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Route, Switch, withRouter, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Home from "./Component/Home";
 import RegistrationForm from "./Component/RegistrationForm";
 

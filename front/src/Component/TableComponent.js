@@ -3,7 +3,7 @@ import "antd/dist/antd.css";
 import { Table, Button } from "antd";
 import { RadioButton } from "./RadioButton";
 
-export function TableComponent({ data }) {
+ function TableComponent({ data }) {
   const columns = [
     {
       title: "firstName",
@@ -46,3 +46,4 @@ export function TableComponent({ data }) {
   ];
   return <Table columns={columns} dataSource={data} />;
 }
+export default TableComponent

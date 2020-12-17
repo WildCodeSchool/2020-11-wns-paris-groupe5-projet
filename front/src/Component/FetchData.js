@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Student from "./Student";
+import TableComponent from './TableComponent'
 
 function Connexion() {
   
@@ -34,7 +34,7 @@ function Connexion() {
   };
 
   return (
-      <Student data={students} sendEmail={sendEmail} />
+      <TableComponent data={students} sendEmail={sendEmail} />
   );
 }
 
