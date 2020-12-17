@@ -61,6 +61,18 @@ UserSchema.methods.generateAuthToken = async function () {
   return token;
 };
 
+UserSchema.statics.findByCredentials = async (email, password) => {
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new Error('Enable to login');
+  }
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    throw new Error('Enable to login');
+  }
+  return user;
+};
+
 // Hash the plain text password before saving
 UserSchema.pre("save", async function (next) {
   const user = this;
@@ -70,7 +82,9 @@ UserSchema.pre("save", async function (next) {
   next();
 });
 
-module.exports = mongoose.model("User", UserSchema);
+
+const User = mongoose.model("User", UserSchema);
+module.exports = User;
 
 // 6 min min
 function hasNumber(myString) {

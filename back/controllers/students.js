@@ -23,7 +23,17 @@ module.exports = {
       res.status(201).send({ user, token });
     } catch (e) {
       console.log("e", e);
-      res.status(500).send(e);
+      res.status(400).send(e);
+    }
+  },
+  login: async ({ body: { email, password } }, res) => {
+    try {
+      const user = await UserModel.findByCredentials(email, password);
+      const token = await user.generateAuthToken();
+      res.send({ user, token });
+    } catch (e) {
+      console.log("error***", e)
+      res.status(400).send({error:"error login"});
     }
   },
   sendEmail: async (req, res) => {
