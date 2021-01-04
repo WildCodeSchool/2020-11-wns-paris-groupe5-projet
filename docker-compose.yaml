@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+  mongodb:
+    image: mongo
+    volumes:
+      - data:/data/db
+    # environment:
+    #   - MONGO_INITDB_ROOT_USERNAME=toto
+    #   - MONGO_INITDB_ROOT_PASSWORD=password
+    env_file:
+      - ./back/config/dev.env
+  backend:
+    build: ./back
+      # context: ./back
+      # dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - /app/node_modules
+      - ./back:/app
+    depends_on:
+      - mongodb
+
+  frontend:
+    build: ./front
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./front/src:/app/src
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+
+volumes:
+  data:
