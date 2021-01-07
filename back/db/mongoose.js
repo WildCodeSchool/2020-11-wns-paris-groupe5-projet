@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 mongoose
   .connect(
-    `mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_URL}:27017/${process.env.DB_NAME}?authSource=admin`,
+    `mongodb+srv://runschool:${process.env.MONGODB_PASSWORD}@cluster0.rqdet.mongodb.net/runschool?retryWrites=true&w=majority`,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
