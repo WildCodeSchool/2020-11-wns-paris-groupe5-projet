@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { Redirect, Route } from "react-router";
 import "antd/dist/antd.css";
 import {
   Form,
@@ -47,10 +49,26 @@ const tailFormItemLayout = {
 
 const RegistrationForm = () => {
   const [form] = Form.useForm();
+  const [signedIn, setSignedIn] = useState(false);
+
 
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
+
+    axios.post('http://localhost:5000/api/student/create', values)
+      .then((res) => {
+        console.log(res.data)
+        setSignedIn(true);
+
+      }).catch((error) => {
+        console.log(error)
+      });
+
+
   };
+
+  if (signedIn === true) return <Redirect to="/" />;
+
 
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
@@ -83,7 +101,7 @@ const RegistrationForm = () => {
         name="register"
         onFinish={onFinish}
         initialValues={{
-          residence: ["zhejiang", "hangzhou", "xihu"],
+          residence: ["Paris", "Lyon", "Marseille"],
           prefix: "86",
         }}
         scrollToFirstError
@@ -93,6 +111,48 @@ const RegistrationForm = () => {
           display: "block",
         }}
       >
+        <Form.Item
+          name="firstName"
+          label={
+            <span>
+              Nom&nbsp;
+              <Tooltip title="What do you want others to call you?">
+                <QuestionCircleOutlined />
+              </Tooltip>
+            </span>
+          }
+          rules={[
+            {
+              required: true,
+              message: "Please input your name!",
+              whitespace: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="lastName"
+          label={
+            <span>
+              Prénom&nbsp;
+              <Tooltip title="What do you want others to call you?">
+                <QuestionCircleOutlined />
+              </Tooltip>
+            </span>
+          }
+          rules={[
+            {
+              required: true,
+              message: "Please input your prénom!",
+              whitespace: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
         <Form.Item
           name="email"
           label="E-mail"
@@ -111,6 +171,24 @@ const RegistrationForm = () => {
         </Form.Item>
 
         <Form.Item
+          name="phone"
+          label="Phone Number"
+          rules={[
+            {
+              required: true,
+              message: "Please input your phone number!",
+            },
+          ]}
+        >
+          <Input
+            /*addonBefore={prefixSelector}*/
+            style={{
+              width: "100%",
+            }}
+          />
+        </Form.Item>
+
+        <Form.Item
           name="password"
           label="Password"
           rules={[
@@ -124,7 +202,7 @@ const RegistrationForm = () => {
           <Input.Password />
         </Form.Item>
 
-        <Form.Item
+        {/*<Form.Item
           name="confirm"
           label="Confirm Password"
           dependencies={["password"]}
@@ -149,66 +227,8 @@ const RegistrationForm = () => {
         >
           <Input.Password />
         </Form.Item>
+        */}
 
-        <Form.Item
-          name="nom"
-          label={
-            <span>
-              Nom&nbsp;
-              <Tooltip title="What do you want others to call you?">
-                <QuestionCircleOutlined />
-              </Tooltip>
-            </span>
-          }
-          rules={[
-            {
-              required: true,
-              message: "Please input your name!",
-              whitespace: true,
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="prénom"
-          label={
-            <span>
-              Prénom&nbsp;
-              <Tooltip title="What do you want others to call you?">
-                <QuestionCircleOutlined />
-              </Tooltip>
-            </span>
-          }
-          rules={[
-            {
-              required: true,
-              message: "Please input your prénom!",
-              whitespace: true,
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="phone"
-          label="Phone Number"
-          rules={[
-            {
-              required: true,
-              message: "Please input your phone number!",
-            },
-          ]}
-        >
-          <Input
-            addonBefore={prefixSelector}
-            style={{
-              width: "100%",
-            }}
-          />
-        </Form.Item>
 
         <Form.Item
           {...tailFormItemLayout}
@@ -218,7 +238,8 @@ const RegistrationForm = () => {
             justifycontent: "center",
           }}
         >
-          <Button type="primary" htmlType="submit">
+          <Button
+            type="primary" htmlType="submit">
             Register
           </Button>
         </Form.Item>
