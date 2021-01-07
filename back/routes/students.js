@@ -4,6 +4,7 @@ const students = require("../controllers/students");
 
 const router = Router();
 
+router.get("/", students.welcomeRoute);
 router.get("/api/students", students.getAllStudents);
 router.post("/api/student/create", students.create);
 router.post("/api/user/login", students.login);
