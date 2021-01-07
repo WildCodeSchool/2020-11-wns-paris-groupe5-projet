@@ -4,20 +4,17 @@ services:
     image: mongo
     volumes:
       - data:/data/db
-    # environment:
-    #   - MONGO_INITDB_ROOT_USERNAME=toto
-    #   - MONGO_INITDB_ROOT_PASSWORD=password
     env_file:
-      - ./back/config/dev.env
+      - ./back/config/mongo.env
   backend:
     build: ./back
-      # context: ./back
-      # dockerfile: Dockerfile
     ports:
-      - "5000:5000"
+      - "5000:80"
     volumes:
       - /app/node_modules
       - ./back:/app
+    env_file:
+      - ./back/config/dev.env
     depends_on:
       - mongodb
 
