@@ -14,4 +14,4 @@ router.post("/api/student/sendSms", students.sendSms);
 router.post("/api/students/saveRecords", students.setStudentsPresence);
 router.delete("/api/student/delete/:id", students.delete);
 
-module.exports = router;
+export { router as userRouter };

@@ -1,5 +1,6 @@
-const request = require("supertest");
-const app = require("../app");
+import request from "supertest";
+// const app = require("../app");
+import { app } from "../app";
 const User = require("../models/User");
 const { setUpDatabase, userOne, userOneId, } = require("./fixtures/db");
 beforeEach(setUpDatabase);

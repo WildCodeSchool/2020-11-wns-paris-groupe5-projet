@@ -3,3 +3,4 @@ back/node_modules
 back/.env
 back/config/
 node_modules
+.DS_Store
