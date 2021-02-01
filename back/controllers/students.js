@@ -4,6 +4,15 @@ const { sendSingleEmail } = require("../utils/sendEmail");
 const StudentPresenceModel = require("../models/StudentPresence");
 
 module.exports = {
+  welcomeRoute: async (req, res) => {
+    console.log("welcomeRoute called");
+    try {
+      res.send({ message: "Welcome to RunSchool api" });
+    } catch (e) {
+      console.log("e", e);
+      res.status(500).send();
+    }
+  },
   getAllStudents: async (req, res) => {
     console.log("getAllWilders called");
     try {
@@ -32,8 +41,8 @@ module.exports = {
       const token = await user.generateAuthToken();
       res.send({ user, token });
     } catch (e) {
-      console.log("error***", e)
-      res.status(400).send({error:"error login"});
+      console.log("error***", e);
+      res.status(400).send({ error: "error login" });
     }
   },
   sendEmail: async (req, res) => {

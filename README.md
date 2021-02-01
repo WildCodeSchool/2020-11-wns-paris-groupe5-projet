@@ -2,10 +2,11 @@
 
 ## BACK-END
 ### Créer un dossier config dans back
-Ensuite créer un fichier dev.env et un ficher test.env  
+Ensuite créer un fichier dev.env,  un ficher test.env et mongo.env 
 Voici ce que peut par exemple contenir le fichier dev.env :  
-```
+
 Pour dev.env 
+```
 DB_HOST=localhost  
 DB_USER=dbUser  
 DB_PASS=databasepassword  
@@ -14,7 +15,16 @@ GMAIL_PASS=emailpassword
 SMS_USER=identifiant  
 SMS_PASS=motDePasse  
 JWT_SECRET=justUnLongString  
-MONGODB_URL=mongodb://localhost:27017/Runschool  
+
+MONGODB_URL=mongodb
+MONGODB_USERNAME=jeVousLenvoieEnPrivé
+MONGODB_PASSWORD=jeVousLenvoieEnPrivé   
+```
+
+Pour mongo.env 
+```
+MONGO_INITDB_ROOT_USERNAME=jeVousLenvoieEnPrivé
+MONGO_INITDB_ROOT_PASSWORD=jeVousLenvoieEnPrivé 
 ```
 
 PS: Pensez à mettre les vraies valeurs après les "="  
