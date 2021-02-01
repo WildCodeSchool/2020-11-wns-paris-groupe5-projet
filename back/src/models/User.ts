@@ -11,10 +11,9 @@ export interface UserDoc extends mongoose.Document {
   lastName: string;
   email: string;
   password: string;
-  phoneNumber: string;
-  tokens: {token:string}[];
+  phoneNumber?: string;
+  tokens: { token: string }[];
 }
-
 
 // An interface that describes the properties
 // that a User Model has
@@ -25,8 +24,8 @@ interface UserModel extends mongoose.Model<UserDoc> {
   lastName: string;
   email: string;
   password: string;
-  phoneNumber: string;
-  tokens: {token:string}[];
+  phoneNumber?: string;
+  tokens: { token: string }[];
 }
 
 const UserSchema = new Schema<UserDoc, UserModel>(
@@ -74,7 +73,6 @@ const UserSchema = new Schema<UserDoc, UserModel>(
       transform(doc, ret) {
         delete ret.password;
         delete ret.tokens;
-
       },
       versionKey: false,
     },
@@ -85,15 +83,14 @@ const UserSchema = new Schema<UserDoc, UserModel>(
 UserSchema.methods.generateAuthToken = async function (this: UserDoc) {
   try {
     const user = this;
-    console.log("process.env.JWT_KEY in***", process.env.JWT_KEY)
+    console.log("process.env.JWT_KEY in***", process.env.JWT_KEY);
     const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_KEY!);
-    console.log("token", token)
+    console.log("token", token);
     user.tokens = user.tokens.concat({ token });
     await user.save();
     return token;
-    
   } catch (error) {
-    console.log("error generateAuthToken", error)
+    console.log("error generateAuthToken", error);
   }
 };
 
@@ -118,7 +115,6 @@ UserSchema.pre<UserDoc>("save", async function (next) {
   next();
 });
 
-
 const User = mongoose.model("User", UserSchema);
 module.exports = User;
 
@@ -127,6 +123,6 @@ function hasNumber(myString: string): boolean {
   return /\d/.test(myString);
 }
 
-function hasUpperCase(str: string): boolean{
+function hasUpperCase(str: string): boolean {
   return /[A-Z]/.test(str);
 }

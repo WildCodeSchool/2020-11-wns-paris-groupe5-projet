@@ -1,11 +1,14 @@
 const request = require("request");
 import { Request, Response } from "express";
+import { validationResult } from "express-validator";
+import { RequestValidationError } from "../errors/request-validation-error";
+// import { DatabaseConnectionError } from "../errors//database-connection-error";
 const UserModel = require("../models/User");
 const { sendSingleEmail } = require("../utils/sendEmail");
 const StudentPresenceModel = require("../models/StudentPresence");
 
 module.exports = {
-  welcomeRoute: async (req:Request, res: Response) => {
+  welcomeRoute: async (req: Request, res: Response) => {
     console.log("welcomeRoute called");
     try {
       res.send({ message: "Welcome to RunSchool api" });
@@ -14,7 +17,7 @@ module.exports = {
       res.status(500).send();
     }
   },
-  getAllStudents: async (req: Request, res:Response) => {
+  getAllStudents: async (req: Request, res: Response) => {
     console.log("getAllWilders called");
     try {
       const students = await UserModel.find({});
@@ -26,6 +29,10 @@ module.exports = {
   },
   create: async (req: Request, res: Response) => {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        throw new RequestValidationError(errors.array());
+      }
       await UserModel.init();
       const user = new UserModel(req.body);
       await user.save();
@@ -36,7 +43,7 @@ module.exports = {
       res.status(400).send(e);
     }
   },
-  login: async ({ body: { email, password } }:Request , res: Response) => {
+  login: async ({ body: { email, password } }: Request, res: Response) => {
     try {
       const user = await UserModel.findByCredentials(email, password);
       const token = await user.generateAuthToken();
@@ -71,7 +78,7 @@ module.exports = {
           formData: {},
         };
 
-        request(options, function (error: Error, response: { body: any; }) {
+        request(options, function (error: Error, response: { body: any }) {
           if (error) {
             console.log("error sending sms", error);
             res.status(500).send();
