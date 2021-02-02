@@ -1,14 +1,15 @@
 FROM node:alpine
 WORKDIR /app
 COPY package.json .
-RUN npm install  --only=prod
+RUN npm install
 COPY . .
-EXPOSE 80
+EXPOSE 3000
 
 ENV MONGODB_USERNAME=root
 ENV MONGODB_PASSWORD=secret
 ENV MONGODB_URL=mongodb
 ENV GMAIL_EMAIL=thiahanet@gmail.com
 ENV GMAIL_PASS=password
+ENV JWT_KEY=fghjty
 
 CMD [ "npm", "run", "start" ]

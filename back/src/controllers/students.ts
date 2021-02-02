@@ -1,10 +1,15 @@
 const request = require("request");
+import { Request, Response } from "express";
+import { validationResult } from "express-validator";
+import { RequestValidationError } from "../errors/request-validation-error";
+import { BadRequestError } from "../errors/bad-request-error";
+// import { DatabaseConnectionError } from "../errors//database-connection-error";
 const UserModel = require("../models/User");
 const { sendSingleEmail } = require("../utils/sendEmail");
 const StudentPresenceModel = require("../models/StudentPresence");
 
 module.exports = {
-  welcomeRoute: async (req, res) => {
+  welcomeRoute: async (req: Request, res: Response) => {
     console.log("welcomeRoute called");
     try {
       res.send({ message: "Welcome to RunSchool api" });
@@ -13,7 +18,7 @@ module.exports = {
       res.status(500).send();
     }
   },
-  getAllStudents: async (req, res) => {
+  getAllStudents: async (req: Request, res: Response) => {
     console.log("getAllWilders called");
     try {
       const students = await UserModel.find({});
@@ -23,19 +28,29 @@ module.exports = {
       res.status(500).send();
     }
   },
-  create: async (req, res) => {
-    try {
-      await UserModel.init();
-      const user = new UserModel(req.body);
-      await user.save();
-      const token = await user.generateAuthToken();
-      res.status(201).send({ user, token });
-    } catch (e) {
-      console.log("e", e);
-      res.status(400).send(e);
+  create: async (req: Request, res: Response) => {
+    // try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      throw new RequestValidationError(errors.array());
     }
+    await UserModel.init();
+    const { email } = req.body;
+    const existingUser = await UserModel.findOne({ email });
+    if (existingUser) {
+      throw new BadRequestError("Email already in use");
+    }
+    const user = new UserModel(req.body);
+    await user.save();
+    const token = await user.generateAuthToken();
+    res.status(201).send({ user, token });
+    // }
+    // catch (e) {
+    //   console.log("e", e);
+    //   res.status(400).send(e);
+    // }
   },
-  login: async ({ body: { email, password } }, res) => {
+  login: async ({ body: { email, password } }: Request, res: Response) => {
     try {
       const user = await UserModel.findByCredentials(email, password);
       const token = await user.generateAuthToken();
@@ -45,7 +60,7 @@ module.exports = {
       res.status(400).send({ error: "error login" });
     }
   },
-  sendEmail: async (req, res) => {
+  sendEmail: async (req: Request, res: Response) => {
     try {
       const response = await sendSingleEmail(req.body);
       if (response.messageId) {
@@ -58,7 +73,7 @@ module.exports = {
       res.status(500).send();
     }
   },
-  sendSms: async (req, res) => {
+  sendSms: async (req: Request, res: Response) => {
     try {
       const id = req.body.id;
       const student = await UserModel.findOne({ _id: id });
@@ -70,7 +85,7 @@ module.exports = {
           formData: {},
         };
 
-        request(options, function (error, response) {
+        request(options, function (error: Error, response: { body: any }) {
           if (error) {
             console.log("error sending sms", error);
             res.status(500).send();
@@ -87,7 +102,7 @@ module.exports = {
       res.status(500).send();
     }
   },
-  delete: async (req, res) => {
+  delete: async (req: Request, res: Response) => {
     try {
       const student = await UserModel.findOneAndDelete({ _id: req.params.id });
 
@@ -100,7 +115,7 @@ module.exports = {
       res.status(500).send();
     }
   },
-  update: async (req, res) => {
+  update: async (req: Request, res: Response) => {
     try {
       const update = req.body;
       const user = await UserModel.findByIdAndUpdate(req.params.id, { $set: update });
@@ -114,7 +129,7 @@ module.exports = {
       res.status(500).send();
     }
   },
-  setStudentsPresence: async (req, res) => {
+  setStudentsPresence: async (req: Request, res: Response) => {
     try {
       const students = req.body;
       const studentsPresence = new StudentPresenceModel(students);

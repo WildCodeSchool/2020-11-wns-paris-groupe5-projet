@@ -1,13 +1,14 @@
-const request = require("supertest");
-const app = require("../app");
+import request from "supertest";
+// const app = require("../app");
+import { app } from "../app";
 const User = require("../models/User");
-const { setUpDatabase, userOne, userOneId, } = require("./fixtures/db");
-beforeEach(setUpDatabase);
+// const { setUpDatabase, userOne, userOneId, } = require("./fixtures/db");
+// beforeEach(setUpDatabase);
 
 describe("Signup a new user", () => {
   test("Don't create new user if email is invalid", async () => {
     await request(app)
-      .post("/api/student/create")
+      .post("/api/user/signup")
       .send({
         firstName: "Ibra",
         lastName: "Niass",
@@ -19,7 +20,7 @@ describe("Signup a new user", () => {
   });
   test("Create user and send code 201", async () => {
     await request(app)
-      .post("/api/student/create")
+      .post("/api/user/signup")
       .send({
         firstName: "Ibra",
         lastName: "Niass",
@@ -31,7 +32,7 @@ describe("Signup a new user", () => {
   });
 
   test("Can find created user in database", async () => {
-    const response = await request(app).post("/api/student/create").send({
+    const response = await request(app).post("/api/user/signup").send({
       firstName: "Ibra",
       lastName: "Niass",
       email: "ibra@example1.com",
@@ -40,13 +41,40 @@ describe("Signup a new user", () => {
     });
 
     // Assert that the database was changed correctly
-    console.log("response.body.user._id", response.body.user._id);
+    // console.log("response.body?.user?._id", response?.body?.user._id);
     const user = await User.findById(response.body.user._id);
     expect(user).not.toBeNull();
   });
 
+  describe("Don't allow duplicate email", () => {
+  test('Should respond 400', async () => {
+    await request(app)
+    .post("/api/user/signup")
+    .send({
+      firstName: "Ibra",
+      lastName: "Niass",
+      email: "ibra@example1.com",
+      password: "MyPassTest1",
+      phoneNumber: "00758325825",
+    })
+    .expect(201);
+
+    await request(app)
+    .post("/api/user/signup")
+    .send({
+      firstName: "Ibra",
+      lastName: "Niass",
+      email: "ibra@example1.com",
+      password: "MyPassTest1",
+      phoneNumber: "00758325825",
+    })
+    .expect(400);
+  });
+  
+});
+
   test("Data send back to front is correct", async () => {
-    const response = await request(app).post("/api/student/create").send({
+    const response = await request(app).post("/api/user/signup").send({
       firstName: "Ibra",
       lastName: "Niass",
       email: "ibra@example1.com",
@@ -55,7 +83,7 @@ describe("Signup a new user", () => {
     });
     const user = await User.findById(response.body.user._id);
 
-    // // Assertion about the response
+  //   // // Assertion about the response
     expect(response.body).toMatchObject({
       user: {
         firstName: "Ibra",
@@ -68,7 +96,7 @@ describe("Signup a new user", () => {
   });
 
   test("Password hash", async () => {
-    const response = await request(app).post("/api/student/create").send({
+    const response = await request(app).post("/api/user/signup").send({
       firstName: "Ibra",
       lastName: "Niass",
       email: "ibra@example1.com",
@@ -87,18 +115,24 @@ describe("Signup a new user", () => {
 
 describe("Should login existing user", () => {
 
-  test("Create user and send code 201", async () => {
-    await request(app)
-      .post("/api/user/login")
-      .send({
-        email: userOne.email,
-      password: userOne.password
-      })
-      .expect(200);
+  test("Can find created user in database", async () => {
+    await request(app).post("/api/user/signup").send({
+      firstName: "Ibra",
+      lastName: "Niass",
+      email: "ibra@example1.com",
+      password: "MyPassTest1",
+      phoneNumber: "00758325825",
+    });
+     await request(app).post("/api/user/login").send({
+      email: "ibra@example1.com",
+      password: "MyPassTest1",
+    }).expect(200)
+
   });
 
   
 });
+
 describe("Should not login non existing user", () => {
   test('Should respond 404', async () => {
     await request(app)
@@ -110,15 +144,4 @@ describe("Should not login non existing user", () => {
       .expect(404);
   });
 
-  test("Create user and send code 201", async () => {
-    await request(app)
-      .post("/api/user/login")
-      .send({
-        email: userOne.email,
-      password: userOne.password
-      })
-      .expect(200);
-  });
-
-  
 });
