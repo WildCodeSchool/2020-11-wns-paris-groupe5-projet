@@ -83,9 +83,9 @@ const UserSchema = new Schema<UserDoc, UserModel>(
 UserSchema.methods.generateAuthToken = async function (this: UserDoc) {
   try {
     const user = this;
-    console.log("process.env.JWT_KEY in***", process.env.JWT_KEY);
+    // console.log("process.env.JWT_KEY in***", process.env.JWT_KEY);
     const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_KEY!);
-    console.log("token", token);
+    // console.log("token", token);
     user.tokens = user.tokens.concat({ token });
     await user.save();
     return token;

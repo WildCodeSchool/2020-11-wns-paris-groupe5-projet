@@ -7,9 +7,9 @@ const router = Router();
 
 router.get("/", students.welcomeRoute);
 router.get("/api/students", students.getAllStudents);
-// router.post("/api/student/create", students.create);
+// router.post("/api/user/signup", students.create);
 router.post(
-  "/api/student/create",
+  "/api/user/signup",
   [
     body("email").isEmail().withMessage("Email must be valid"),
     body("password").trim().isLength({ min: 6, max: 20 }).withMessage("Password is invalid"),
