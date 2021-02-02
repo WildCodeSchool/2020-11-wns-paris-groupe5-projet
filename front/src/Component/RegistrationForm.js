@@ -55,7 +55,7 @@ const RegistrationForm = () => {
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
 
-    axios.post('http://localhost:5000/api/student/create', values)
+    axios.post('http://localhost:5000/api/user/signup', values)
       .then((res) => {
         console.log(res.data)
         setSignedIn(true);
