@@ -19,8 +19,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm install
-      - name: test
-        run: npm test
-        env:
-          CI: true
-
+      - run: npm run test:ci
