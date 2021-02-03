@@ -19,7 +19,6 @@ module.exports = {
     }
   },
   getAllStudents: async (req: Request, res: Response) => {
-    console.log("getAllWilders called");
     try {
       const students = await UserModel.find({});
       res.send(students);

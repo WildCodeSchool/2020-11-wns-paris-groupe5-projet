@@ -19,4 +19,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm install
-      - run: CI=true npm run test
+      - name: test
+        run: npm test
+        env:
+          CI: true
+
