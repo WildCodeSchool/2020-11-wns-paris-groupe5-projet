@@ -1,15 +1,15 @@
-FROM node:alpine
+FROM node:14.3.0
 WORKDIR /app
 COPY package.json .
+COPY .npmrc .
+RUN npm cache clean --force
 RUN npm install
 COPY . .
 EXPOSE 3000
-
 ENV MONGODB_USERNAME=root
 ENV MONGODB_PASSWORD=secret
 ENV MONGODB_URL=mongodb
 ENV GMAIL_EMAIL=thiahanet@gmail.com
 ENV GMAIL_PASS=password
 ENV JWT_KEY=fghjty
-
 CMD [ "npm", "run", "start" ]
