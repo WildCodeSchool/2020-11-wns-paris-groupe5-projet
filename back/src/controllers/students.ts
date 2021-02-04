@@ -27,7 +27,6 @@ module.exports = {
     }
   },
   create: async (req: Request, res: Response) => {
-    // try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       throw new RequestValidationError(errors.array());
@@ -42,11 +41,6 @@ module.exports = {
     await user.save();
     const token = await user.generateAuthToken();
     res.status(201).send({ user, token });
-    // }
-    // catch (e) {
-    //   console.log("e", e);
-    //   res.status(400).send(e);
-    // }
   },
   login: async ({ body: { email, password } }: Request, res: Response) => {
     try {
