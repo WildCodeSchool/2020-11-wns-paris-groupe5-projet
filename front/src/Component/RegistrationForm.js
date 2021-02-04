@@ -87,14 +87,9 @@ const RegistrationForm = () => {
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Header className="header">
-        <div className="logo" />
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-          <Menu.Item key="2">
-            <Link to="/">Home</Link>
-          </Menu.Item>
-        </Menu>
-      </Header>
+
+      <Link to="/">Home</Link>
+
       <Form
         {...formItemLayout}
         form={form}
