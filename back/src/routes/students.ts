@@ -7,6 +7,7 @@ const router = Router();
 
 router.get("/", students.welcomeRoute);
 router.get("/api/students", students.getAllStudents);
+// router.post("/api/user/signup", students.create);
 router.post(
   "/api/user/signup",
   [
