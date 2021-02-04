@@ -34,7 +34,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - run: cd back && docker build -t niass/api-5
+      - run: cd back && docker build -t niass/api-5 .
 
       # Runs a single command using the runners shell
       - name: Login to Docker Hub
