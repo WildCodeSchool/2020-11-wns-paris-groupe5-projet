@@ -8,7 +8,6 @@ import axios from "axios";
 const { Header } = Layout;
 
 const Login = () => {
-    const [form] = Form.useForm();
     const [token, setToken] = useState("");
 
     const onFinish = (values) => {
@@ -16,8 +15,6 @@ const Login = () => {
     
         axios.post('http://localhost:5000/api/user/login', values)
           .then(res => {
-            console.log('res.user', res.data.user)
-            console.log('token', res.data.token)
             setToken(true);
           })
 
@@ -26,12 +23,9 @@ const Login = () => {
           });
     
       };
-      console.log("token", token)
 
-      if (token === true) return <Redirect to="/" />;
+      if (token === true) return <Redirect to="/Menu1" />;
 
-
-const { Content } = Layout;
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
