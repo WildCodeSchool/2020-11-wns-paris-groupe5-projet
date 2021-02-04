@@ -1,9 +1,9 @@
 FROM node:alpine
 WORKDIR /app
 COPY package.json .
-RUN npm install
+RUN npm install  --only=prod	
 COPY . .
-EXPOSE 3000
+EXPOSE 80
 
 ENV MONGODB_USERNAME=root
 ENV MONGODB_PASSWORD=secret
