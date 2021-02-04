@@ -13,7 +13,6 @@ function App() {
           <Route path="/" exact component={Login} />
           <Route path="/registrationForm" component={RegistrationForm} />
           <Route path="/" component={Menu1} />
-          <Redirect to="/" />
         </Switch>
       </BrowserRouter>
     </div>

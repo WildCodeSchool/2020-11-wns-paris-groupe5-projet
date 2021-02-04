@@ -67,7 +67,7 @@ const RegistrationForm = () => {
 
   };
 
-  if (signedIn === true) return <Redirect to="/" />;
+  if (signedIn === true) return <Redirect to="/Menu1" />;
 
 
   const prefixSelector = (
