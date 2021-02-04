@@ -14,9 +14,9 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - "5000:3000"
-    # volumes:
-    #   - /app/node_modules
-    #   - ./back/src:/app/src
+    volumes:
+      - /app/node_modules
+      - ./back/src:/app/src
     env_file:
       - ./back/config/dev.env
     # depends_on:
