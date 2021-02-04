@@ -10,3 +10,4 @@ export class BadRequestError extends CustomError {
     return [{ message: this.message }];
   }
 }
+// 

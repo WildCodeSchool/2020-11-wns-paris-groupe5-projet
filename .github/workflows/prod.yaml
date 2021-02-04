@@ -12,9 +12,9 @@ on:
     paths:
       - "back/**"
 
-# defaults:
-#   run:
-#     working-directory: back
+defaults:
+  run:
+    working-directory: back
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
