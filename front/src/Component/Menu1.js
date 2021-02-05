@@ -22,7 +22,7 @@ function Dashboard() {
         <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
             <Menu.Item key="1" icon={<PieChartOutlined />}>
-              <Link to="/">HomePage  </Link>
+              <Link to="/homepage">HomePage  </Link>
             </Menu.Item>
             <Menu.Item key="2" icon={<DesktopOutlined />}>
               <Link to="/fetchData">FetchData</Link>
@@ -45,7 +45,6 @@ function Dashboard() {
           <Content style={{ margin: '0 16px' }}>
             <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
               <Switch>
-                <Route exact path="/" component={Menu1} />
                 <Route path="/fetchData" component={FetchData} />
                 <Route path="/registrationForm" component={RegistrationForm} />
                 <Route path="/forum" component={Forum} />

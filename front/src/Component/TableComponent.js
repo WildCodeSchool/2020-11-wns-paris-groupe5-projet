@@ -6,12 +6,12 @@ import { RadioButton } from "./RadioButton";
  function TableComponent({ data }) {
   const columns = [
     {
-      title: "firstName",
+      title: "Prénom",
       dataIndex: "firstName",
       key: "firstName",
     },
     {
-      title: "lastName",
+      title: "Nom",
       dataIndex: "lastName",
       key: "lastName",
     },

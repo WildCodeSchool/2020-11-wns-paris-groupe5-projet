@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col, Form, Input, Button, Checkbox, Card, Layout, Menu } from 'antd';
+import { Row, Col, Form, Input, Button, Checkbox, Card, Layout, Menu, Space } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import {
     BrowserRouter as Router,
@@ -7,7 +7,6 @@ import {
   } from "react-router-dom";
 import { Redirect } from "react-router";
 import axios from "axios";
-import { Alert } from 'antd';
 
 const { Header } = Layout;
 
@@ -44,7 +43,7 @@ const Login = () => {
             </Header>
             <Row justify="space-around" align="middle">
             <Col>
-                <Card justify="space-around" align="middle">
+                <Card  style={{marginTop:'5rem'}} className="cardlogin" justify="space-around" align="middle">
                 <h1>Connectez-vous</h1>
                 <Form
                 name="normal_login"
