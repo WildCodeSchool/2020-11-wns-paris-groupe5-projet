@@ -7,8 +7,10 @@ import Menu1 from './Component/Menu1'
 import FetchData from './Component/FetchData'
 import Forum from './Component/Forum'
 import RegistrationForm from "./Component/RegistrationForm";
-import Chat from './Component/Chat'
 import Documents from './Component/Documents';
+
+import Space from "./Component/Socket/Home/Space";
+import Chat from "./Component/Socket/Chat/Chat";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -30,9 +32,12 @@ function DashBoard() {
               <Link to="/forum">Forum</Link>
             </Menu.Item>
             <Menu.Item key="5" icon={<FileOutlined />}>
-              <Link to="/chat">Chat</Link>
+              <Link to='/chat'>Chat</Link>
             </Menu.Item>
             <Menu.Item key="6" icon={<FileOutlined />}>
+              <Link to='/:roomId'>Room</Link>
+            </Menu.Item>
+            <Menu.Item key="7" icon={<FileOutlined />}>
               <Link to="/documents">Documents</Link>
             </Menu.Item>
           </Menu>
@@ -48,7 +53,8 @@ function DashBoard() {
                 <Route path="/fetchData" component={FetchData} />
                 <Route path="/registrationForm" component={RegistrationForm} />
                 <Route path="/forum" component={Forum} />
-                <Route path="/chat" component={Chat} />
+                <Route exact path="/chat" component={Space} />
+                <Route exact path="/room/:roomId" component={Chat} />
                 <Route path="/documents" component={Documents} />
               </Switch>
             </div>
