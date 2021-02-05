@@ -3,7 +3,6 @@ import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { RequestValidationError } from "../errors/request-validation-error";
 import { BadRequestError } from "../errors/bad-request-error";
-// import { DatabaseConnectionError } from "../errors//database-connection-error";
 const UserModel = require("../models/User");
 const { sendSingleEmail } = require("../utils/sendEmail");
 const StudentPresenceModel = require("../models/StudentPresence");
@@ -28,7 +27,6 @@ module.exports = {
     }
   },
   create: async (req: Request, res: Response) => {
-    // try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       throw new RequestValidationError(errors.array());
@@ -43,11 +41,6 @@ module.exports = {
     await user.save();
     const token = await user.generateAuthToken();
     res.status(201).send({ user, token });
-    // }
-    // catch (e) {
-    //   console.log("e", e);
-    //   res.status(400).send(e);
-    // }
   },
   login: async ({ body: { email, password } }: Request, res: Response) => {
     try {
