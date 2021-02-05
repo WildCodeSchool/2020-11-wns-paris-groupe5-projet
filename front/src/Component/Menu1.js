@@ -22,7 +22,7 @@ function Dashboard() {
         <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
             <Menu.Item key="1" icon={<PieChartOutlined />}>
-              <Link to="/homepage">HomePage  </Link>
+              <Link to="/menu1">HomePage  </Link>
             </Menu.Item>
             <Menu.Item key="2" icon={<DesktopOutlined />}>
               <Link to="/fetchData">FetchData</Link>
