@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, Button, TouchableOpacity } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
-import { CheckBox } from "react-native-elements";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+  StatusBar,
+  Dimensions,
+} from "react-native";
+
 import Modal from "react-native-modal";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomCheckBox from "../../components/CheckBox/CustomCheckBox";
@@ -12,6 +19,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 import { studentList, sendEmail } from "../../services/auth";
 
+const fullWidth = Dimensions.get("window").width;
 function ModalTester({ isModalVisible, setModalVisible, name, isError }) {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -19,8 +27,6 @@ function ModalTester({ isModalVisible, setModalVisible, name, isError }) {
 
   return (
     <View style={{ flex: 1 }}>
-      {/* <Button title="Show modal" onPress={toggleModal} /> */}
-
       <Modal isVisible={isModalVisible}>
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
           <View
@@ -34,12 +40,18 @@ function ModalTester({ isModalVisible, setModalVisible, name, isError }) {
             }}
           >
             {isError ? (
-              <View style={{flexDirection:'row', justifyContent: "center", alignItems: "center"}}>
+              <View
+                style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}
+              >
                 <Text> Une erreur est survenue </Text>
                 <Text>
-            <Entypo style={{}} name="emoji-sad" size={25} style={{ color: "#FF4500", marginBottom: 0}}/>
-
-            </Text>
+                  <Entypo
+                    style={{}}
+                    name="emoji-sad"
+                    size={25}
+                    style={{ color: "#FF4500", marginBottom: 0 }}
+                  />
+                </Text>
               </View>
             ) : (
               <Text>
@@ -73,7 +85,6 @@ function ModalTester({ isModalVisible, setModalVisible, name, isError }) {
 export default function Students() {
   const [students, setStudents] = useState([]);
   const [name, setName] = useState("");
-  const [isChecked, setChecked] = useState(false);
   const [error, setIsError] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
 
@@ -81,7 +92,6 @@ export default function Students() {
     try {
       const studentListData = await studentList();
       setStudents(studentListData);
-      // console.log("studentListData", studentListData);
     } catch (err) {
       console.log("error studentListData", err);
     }
@@ -97,157 +107,32 @@ export default function Students() {
       const sentEmail = await sendEmail(email);
       console.log("sentEmail", sentEmail);
       if (sentEmail.success) {
-        // setModalVisible(true);
         setName(name);
       }
     } catch (err) {
       setIsError(true);
-      // setModalVisible(true);
       console.log("error setName");
     } finally {
       setModalVisible(true);
     }
   };
 
-  return (
-    <SafeAreaView>
-      <ScrollView>
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-          <ModalTester
-            isError={error}
-            name={name}
-            isModalVisible={isModalVisible}
-            setModalVisible={setModalVisible}
-          />
-          <Text>Liste des étudiants</Text>
-          {students.map((student) => (
-            <View
-            key={student._id} 
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                width: "95%",
-                padding: 10,
-                borderWidth: 0.5,
-                borderColor: "lightgrey",
-                marginBottom: 20,
-                borderRadius: 10,
-                shadowColor: "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: 1,
-                },
-                shadowOpacity: 0.22,
-                shadowRadius: 2.22,
-                elevation: 3,
-              }}
-            >
-              <View style={{ justifyContent: "space-around", flex: 1 }}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    width: "100%",
-                    alignItems: "center",
-                  }}
-                >
-                  <EvilIcons
-                    style={{
-                      color: "#DE6262",
-                      backgroundColor: "transparent",
-                      display: "flex",
-                      borderRadius: 30,
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginVertical: 5,
-                      marginRight: 3,
-                    }}
-                    name="user"
-                    size={40}
-                  />
-                  <Text style={styles.label}>
-                    {student.firstName}
-                    {/* {student.lastName}
-              {student.sendEmail}
-              {student.sendSms}
-              {student.email}
-              {student.phoneNumber}  */}
-                  </Text>
-                </View>
+  const renderItem = ({ item }) => (
+    <Item handleSendEmail={handleSendEmail} firstName={item.firstName} email={item.email} />
+  );
 
-                <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-                  <TouchableOpacity onPress={() => console.log("send")}>
-                    <LinearGradient
-                      colors={["#DE6262", "#FFB88C"]}
-                      start={[0, 1]}
-                      end={[1, 0]}
-                      style={{
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRadius: 15,
-                        paddingLeft: 10,
-                        paddingRight: 10,
-                        height: 35,
-                      }}
-                    >
-                      <Text
-                        style={{
-                          backgroundColor: "transparent",
-                          fontSize: 13,
-                          color: "#fff",
-                          lineHeight: 20,
-                        }}
-                      >
-                        Envoyer SmS
-                      </Text>
-                    </LinearGradient>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => handleSendEmail(student.email, student.firstName)}
-                  >
-                    <LinearGradient
-                      colors={["#DE6262", "#FFB88C"]}
-                      start={[0, 1]}
-                      end={[1, 0]}
-                      style={{
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRadius: 15,
-                        paddingLeft: 10,
-                        paddingRight: 10,
-                        height: 35,
-                      }}
-                    >
-                      <Text
-                        style={{
-                          backgroundColor: "transparent",
-                          fontSize: 13,
-                          color: "#fff",
-                          lineHeight: 23,
-                        }}
-                      >
-                        Envoyer mail
-                      </Text>
-                    </LinearGradient>
-                  </TouchableOpacity>
-                </View>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <TouchableOpacity>
-                  {/* <Text>Envoyer par sms</Text>
-          <Text>Envoyer par mail</Text> */}
-                </TouchableOpacity>
-              </View>
-              <View style={{}}>
-                <CustomCheckBox text="Present" />
-                <CustomCheckBox text="Absent" />
-              </View>
-              {/* <CheckBox textStyle={{fontSize:10}} size={15} iconRight title={"Present"} onPress={() => setChecked(bool => !bool)} center checked={isChecked} />
-            <CheckBox textStyle={{fontSize:10}} size={15} iconRight title={"Absent"} onPress={() => setChecked(bool => !bool)} center checked={isChecked} /> */}
-            </View>
-          ))}
-        </View>
-      </ScrollView>
+  return (
+    <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight || 20, marginBottom: 40 }}>
+      <View style={{ justifyContent: "center", alignItems: "center", width: "100%" }}>
+        <ModalTester
+          isError={error}
+          name={name}
+          isModalVisible={isModalVisible}
+          setModalVisible={setModalVisible}
+        />
+        <Text style={{ marginBottom: 20 }}>Liste des étudiants</Text>
+        <FlatList data={students} renderItem={renderItem} keyExtractor={(item) => item._id} />
+      </View>
     </SafeAreaView>
   );
 }
@@ -257,3 +142,115 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 });
+
+function Item({ firstName, email, handleSendEmail }) {
+  return (
+    <View
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: fullWidth * 0.9,
+        // flex: 1,
+        padding: 10,
+        borderWidth: 0.5,
+        borderColor: "lightgrey",
+        marginBottom: 20,
+        borderRadius: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+        elevation: 3,
+      }}
+    >
+      <View style={{ justifyContent: "space-around", flex: 1 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            width: "100%",
+            alignItems: "center",
+          }}
+        >
+          <EvilIcons
+            style={{
+              color: "#DE6262",
+              backgroundColor: "transparent",
+              display: "flex",
+              borderRadius: 30,
+              alignItems: "center",
+              justifyContent: "center",
+              marginVertical: 5,
+              marginRight: 3,
+            }}
+            name="user"
+            size={40}
+          />
+          <Text style={styles.label}>{firstName}</Text>
+        </View>
+
+        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+          <TouchableOpacity onPress={() => console.log("send")}>
+            <LinearGradient
+              colors={["#DE6262", "#FFB88C"]}
+              start={[0, 1]}
+              end={[1, 0]}
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: 15,
+                paddingLeft: 10,
+                paddingRight: 10,
+                height: 35,
+              }}
+            >
+              <Text
+                style={{
+                  backgroundColor: "transparent",
+                  fontSize: 13,
+                  color: "#fff",
+                  lineHeight: 20,
+                }}
+              >
+                Envoyer SmS
+              </Text>
+            </LinearGradient>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => handleSendEmail(email, firstName)}>
+            <LinearGradient
+              colors={["#DE6262", "#FFB88C"]}
+              start={[0, 1]}
+              end={[1, 0]}
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: 15,
+                paddingLeft: 10,
+                paddingRight: 10,
+                height: 35,
+              }}
+            >
+              <Text
+                style={{
+                  backgroundColor: "transparent",
+                  fontSize: 13,
+                  color: "#fff",
+                  lineHeight: 23,
+                }}
+              >
+                Envoyer mail
+              </Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View style={{}}>
+        <CustomCheckBox text="Present" />
+        <CustomCheckBox text="Absent" />
+      </View>
+    </View>
+  );
+}
