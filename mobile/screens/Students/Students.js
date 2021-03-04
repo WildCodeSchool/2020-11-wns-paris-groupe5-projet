@@ -122,6 +122,7 @@ export default function Students() {
           <Text>Liste des étudiants</Text>
           {students.map((student) => (
             <View
+            key={student._id} 
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
@@ -164,7 +165,7 @@ export default function Students() {
                     name="user"
                     size={40}
                   />
-                  <Text key={student._id} style={styles.label}>
+                  <Text style={styles.label}>
                     {student.firstName}
                     {/* {student.lastName}
               {student.sendEmail}
