@@ -8,8 +8,9 @@ const mail = nodemailer.createTransport({
   },
 });
 
+
 const sendSingleEmail = async (
-  {to = "ibrahima.niass.ch@gmail.com",
+  {to,
   subject = "Sending Email via Node.js",
   text = "That was easy cool!"}
 ) => {
