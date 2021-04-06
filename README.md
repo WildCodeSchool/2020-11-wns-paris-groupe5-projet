@@ -65,3 +65,8 @@ npm run dev
 npm run test
 
 ```
+## Docker
+```
+1 - Lancer docker sur votre machine
+2 - Commande dans le terminal : docker-compose up --build 
+```
