@@ -72,7 +72,7 @@ const Login = () => {
                   </a>
                 </Form.Item>
                 {error && (
-                  <p style={{ color: "red", marginTop: "-15px", marginBottom: "-10px" }}>{error}</p>
+                  <p style={{ color: "red" }}>{error}</p>
                 )}
 
                 <Form.Item>
