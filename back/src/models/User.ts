@@ -97,11 +97,11 @@ UserSchema.methods.generateAuthToken = async function (this: UserDoc) {
 UserSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email });
   if (!user) {
-    throw new Error("Enable to login");
+    throw new Error("Email ou mot de passe incorrect");
   }
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
-    throw new Error("Enable to login");
+    throw new Error("Email ou mot de passe incorrect");
   }
   return user;
 };

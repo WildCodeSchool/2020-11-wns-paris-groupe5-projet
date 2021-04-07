@@ -48,8 +48,8 @@ module.exports = {
       const token = await user.generateAuthToken();
       res.send({ user, token });
     } catch (e) {
-      console.log("error***", e);
-      res.status(400).send({ error: "error login" });
+      console.log("error***", e.message);
+      res.status(400).send({ error: e.message });
     }
   },
   sendEmail: async (req: Request, res: Response) => {
