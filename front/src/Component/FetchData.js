@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import TableComponent from './TableComponent'
+import TableComponent from "./TableComponent";
+import { useAuthContexts } from "../hooks/context";
 
 function Connexion() {
-
   const [students, setStudents] = useState([]);
+  const { user } = useAuthContexts();
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -31,19 +32,18 @@ function Connexion() {
     fetchStudents();
   }, []);
   if (students.length) {
-    console.log("students0", students[0]._id)
+    console.log("students0", students[0]._id);
   }
 
   const sendEmail = async (email) => {
     try {
-      return await axios.post("http://localhost:5000/api/student/sendEmail",
-        {
-          to: email,
-          subject: "Retard",
-          text: "Hello, tu es en retard pour le cours !"
-        });
+      return await axios.post("http://localhost:5000/api/student/sendEmail", {
+        to: email,
+        subject: "Retard",
+        text: "Hello, tu es en retard pour le cours !",
+      });
     } catch (e) {
-      console.log("error, error")
+      console.log("error, error");
     }
   };
   const sendSms = async (id) => {
@@ -53,10 +53,12 @@ function Connexion() {
       console.log("error, error");
     }
   };
+  if (!user) {
+    return window.location.replace("/login");
+  }
 
-  return (
-    <TableComponent data={students} />
-  );
+
+  return <TableComponent data={students} />;
 }
 
 export default Connexion;

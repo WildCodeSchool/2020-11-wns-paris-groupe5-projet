@@ -1,20 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import { Redirect, Route } from "react-router";
+import { Redirect } from "react-router";
 import "antd/dist/antd.css";
-import {
-  Form,
-  Input,
-  Tooltip,
-  Menu,
-  Layout,
-  Select,
-  Button,
-} from "antd";
+import { Form, Input, Tooltip, Layout, Button } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
-const { Header } = Layout;
-const { Option } = Select;
+import { useAuthContexts } from "../hooks/context";
 
 const formItemLayout = {
   labelCol: {
@@ -49,45 +39,18 @@ const tailFormItemLayout = {
 
 const RegistrationForm = () => {
   const [form] = Form.useForm();
-  const [signedIn, setSignedIn] = useState(false);
+  const { register, user } = useAuthContexts();
 
-
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     console.log("Received values of form: ", values);
 
-    axios.post('http://localhost:5000/api/user/signup', values)
-      .then((res) => {
-        console.log(res.data)
-        setSignedIn(true);
-
-      }).catch((error) => {
-        console.log(error)
-      });
-
-
+    await register(values);
   };
 
-  if (signedIn === true) return <Redirect to="/Menu1" />;
-
-
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="33">+33</Option>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
-
+  if (user) return <Redirect to="/" />;
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-
       <Link to="/">Home</Link>
 
       <Form
@@ -166,7 +129,7 @@ const RegistrationForm = () => {
         </Form.Item>
 
         <Form.Item
-          name="phone"
+          name="phoneNumber"
           label="Phone Number"
           rules={[
             {
@@ -224,7 +187,6 @@ const RegistrationForm = () => {
         </Form.Item>
         */}
 
-
         <Form.Item
           {...tailFormItemLayout}
           style={{
@@ -233,8 +195,7 @@ const RegistrationForm = () => {
             justifycontent: "center",
           }}
         >
-          <Button
-            type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit">
             Register
           </Button>
         </Form.Item>
