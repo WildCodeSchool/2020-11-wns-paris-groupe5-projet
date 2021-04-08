@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Menu1 from "./Component/Menu1";
+import Menu from "./Component/Menu";
 import Login from "./Component/Login";
 import Logout from "./Component/Logout";
 import RegistrationForm from "./Component/RegistrationForm";
@@ -28,7 +28,7 @@ function App() {
         <Route path="/login" exact component={Login} />
         <Route path="/logout" exact component={Logout} />
         <Route path="/registrationForm" exact component={RegistrationForm} />
-        <Route path="/" component={Menu1} />
+        <Route path="/" component={Menu} />
         </Switch>
       </BrowserRouter>
     </div>

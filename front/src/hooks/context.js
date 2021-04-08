@@ -6,7 +6,7 @@ import {
   getAuthLocalStorageData,
 } from "../utils/storage";
 import * as AuthAPI from "../services/auth";
-import { useHistory } from "react-router-dom";
+
 
 const AuthContext = createContext();
 
@@ -53,7 +53,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const history = useHistory()
 
   const logout = async () => {
     console.log("logout ok");
@@ -64,9 +63,6 @@ export const AuthProvider = ({ children }) => {
         error: null,
         user: null,
       });
-      //history.push("/login");
-      //window.location.replace('/login');
-      //return null;
     } catch (error) {
       console.log("formated error", error);
       return error;
