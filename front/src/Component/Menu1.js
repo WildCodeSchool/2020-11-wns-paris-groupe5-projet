@@ -1,24 +1,26 @@
 import React, { useState } from "react";
-import FetchData from "./FetchData";
+import { useAuthContexts } from "../hooks/context";
+import { Switch, Route, Link } from "react-router-dom";
+import { DesktopOutlined, PieChartOutlined, FileOutlined } from "@ant-design/icons";
+import { Layout, Menu } from "antd";
 import Forum from "./Forum";
 import Chat from "./Chat";
 import Documents from "./Documents";
-import { useAuthContexts } from "../hooks/context";
+import FetchData from "./FetchData";
+import RegistrationForm from "./RegistrationForm";
+import { useHistory } from "react-router-dom";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { DesktopOutlined, PieChartOutlined, FileOutlined } from "@ant-design/icons";
-import { Layout, Menu } from "antd";
 
 const { Header, Content, Footer, Sider } = Layout;
 
 function Dashboard() {
-  const { user } = useAuthContexts();
+  const { user, logout} = useAuthContexts();
 
   const [collapsed, setCollapsed] = useState(false);
 
+
   return (
     <div>
-      <Router>
         <Layout style={{ minHeight: "100vh" }}>
           <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
             <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
@@ -26,7 +28,7 @@ function Dashboard() {
                 <Link to="/">HomePage </Link>
               </Menu.Item>
               <Menu.Item key="2" icon={<DesktopOutlined />}>
-                <Link to="/fetchData">FetchData</Link>
+                <Link to="/elevesliste">Liste des élèves</Link>
               </Menu.Item>
               <Menu.Item key="4" icon={<FileOutlined />}>
                 <Link to="/forum">Forum</Link>
@@ -44,32 +46,29 @@ function Dashboard() {
               className="site-layout-background"
               style={{ padding: 0, textAlign: "right", color: "white" }}
             >
-              <p>
-                <Link to="/registrationForm">Sign up</Link>
+              <p style={{ marginRight: "50px" }}>
+            {user ? <Link to={"/logout"}>Logout</Link> : <Link to={"/login"}>Login</Link>}
               </p>
             </Header>
             <Content style={{ margin: "0 16px" }}>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                 <div>
                   <h1>Bienvenue {user?.firstName} !</h1>
-                </div>
-                <Switch>
-                  <Route exact path="/login">
-                    <h3>Please select a topic.</h3>
-                  </Route>
-                  <Route path="/fetchData" component={FetchData} />
+                  <Switch>
+                  <Route path="/registrationForm" exact component={RegistrationForm} />
+                  <Route path="/elevesliste" component={FetchData} />
                   <Route path="/forum" component={Forum} />
                   <Route path="/chat" component={Chat} />
                   <Route path="/documents" component={Documents} />
                 </Switch>
+                </div>
               </div>
             </Content>
             <Footer style={{ textAlign: "center", fontWeight: "bold" }}>
-              XP3000 designed by Vincent Kouoï
+              Designed by Groupe 5
             </Footer>
           </Layout>
         </Layout>
-      </Router>
     </div>
   );
 }

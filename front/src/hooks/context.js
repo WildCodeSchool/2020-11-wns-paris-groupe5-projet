@@ -6,6 +6,7 @@ import {
   getAuthLocalStorageData,
 } from "../utils/storage";
 import * as AuthAPI from "../services/auth";
+import { useHistory } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -52,6 +53,26 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const history = useHistory()
+
+  const logout = async () => {
+    console.log("logout ok");
+    try {
+      clearAuthLocalStorageData();
+      setAuthState({
+        status: "pending",
+        error: null,
+        user: null,
+      });
+      //history.push("/login");
+      //window.location.replace('/login');
+      //return null;
+    } catch (error) {
+      console.log("formated error", error);
+      return error;
+    }
+  };
+
   const getStoredData = () => {
     const persistantData = getAuthLocalStorageData();
     if (persistantData !== null) {
@@ -69,6 +90,7 @@ export const AuthProvider = ({ children }) => {
         ...authState,
         login,
         register,
+        logout,
         setAuthState,
         getStoredData,
       }}

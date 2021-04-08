@@ -4,6 +4,7 @@ export default function Forum() {
     return (
         <>
             Forum
+            <p>Test</p>
         </>
     )
 }
