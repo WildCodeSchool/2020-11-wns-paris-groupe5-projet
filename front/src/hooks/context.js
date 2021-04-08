@@ -53,9 +53,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  //const history = useHistory()
+  const history = useHistory()
 
-  const logout = async ({ email, password }) => {
+  const logout = async () => {
+    console.log("logout ok");
     try {
       clearAuthLocalStorageData();
       setAuthState({
@@ -64,8 +65,8 @@ export const AuthProvider = ({ children }) => {
         user: null,
       });
       //history.push("/login");
-      window.location.replace('/login');
-      return null;
+      //window.location.replace('/login');
+      //return null;
     } catch (error) {
       console.log("formated error", error);
       return error;
