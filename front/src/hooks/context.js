@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect } from "react";
+import React, { useState, createContext, useContext } from "react";
 import { setAxiosToken } from "../utils/axiosApi";
 import {
   clearAuthLocalStorageData,
@@ -9,9 +9,8 @@ import * as AuthAPI from "../services/auth";
 
 const AuthContext = createContext();
 
-
 export function useAuthContexts() {
-  const context = React.useContext(AuthContext);
+  const context = useContext(AuthContext);
   if (!context) {
     throw new Error("AuthContext must be used within a CountProvider");
   }
@@ -56,6 +55,9 @@ export const AuthProvider = ({ children }) => {
   const getStoredData = () => {
     const persistantData = getAuthLocalStorageData();
     if (persistantData !== null) {
+      const { user, token } = persistantData;
+      setAxiosToken(token);
+      setAuthState({ status: "success", error: null, user });
       return persistantData;
     }
     return null;
