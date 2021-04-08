@@ -11,8 +11,6 @@ const Login = () => {
   const { login, user } = useAuthContexts();
   const [error, setError] = useState("");
 
-  console.log("error*****", error);
-
   const onFinish = async ({ email, password }) => {
     try {
       const erorLogin = await login({ email, password });
@@ -71,9 +69,7 @@ const Login = () => {
                     Mot de passe oublié ?
                   </a>
                 </Form.Item>
-                {error && (
-                  <p style={{ color: "red" }}>{error}</p>
-                )}
+                {error && <p style={{ color: "red" }}>{error}</p>}
 
                 <Form.Item>
                   <Button type="primary" htmlType="submit" className="login-form-button">
