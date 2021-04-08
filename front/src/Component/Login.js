@@ -18,6 +18,7 @@ const Login = () => {
     } catch (error) {}
   };
   if (user) return <Redirect to="/" />;
+  
   return (
     <>
       <Layout style={{ minHeight: "100vh" }}>

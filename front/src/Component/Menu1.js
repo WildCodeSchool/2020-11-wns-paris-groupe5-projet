@@ -8,13 +8,17 @@ import { useAuthContexts } from "../hooks/context";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { DesktopOutlined, PieChartOutlined, FileOutlined } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
+import { useHistory } from "react-router-dom";
+
 
 const { Header, Content, Footer, Sider } = Layout;
 
 function Dashboard() {
-  const { user } = useAuthContexts();
+  const { user, logout} = useAuthContexts();
 
   const [collapsed, setCollapsed] = useState(false);
+
+  const history = useHistory()
 
   return (
     <div>
@@ -26,7 +30,7 @@ function Dashboard() {
                 <Link to="/">HomePage </Link>
               </Menu.Item>
               <Menu.Item key="2" icon={<DesktopOutlined />}>
-                <Link to="/fetchData">FetchData</Link>
+                <Link to="/elevesliste">Liste des élèves</Link>
               </Menu.Item>
               <Menu.Item key="4" icon={<FileOutlined />}>
                 <Link to="/forum">Forum</Link>
@@ -44,8 +48,8 @@ function Dashboard() {
               className="site-layout-background"
               style={{ padding: 0, textAlign: "right", color: "white" }}
             >
-              <p>
-                <Link to="/registrationForm">Sign up</Link>
+              <p style={{ marginRight: "50px" }}>
+            {user ? <Link onClick={logout}>Logout</Link> : <Link to={"/login"}>Login</Link>}
               </p>
             </Header>
             <Content style={{ margin: "0 16px" }}>
@@ -54,10 +58,7 @@ function Dashboard() {
                   <h1>Bienvenue {user?.firstName} !</h1>
                 </div>
                 <Switch>
-                  <Route exact path="/login">
-                    <h3>Please select a topic.</h3>
-                  </Route>
-                  <Route path="/fetchData" component={FetchData} />
+                  <Route path="/elevesliste" component={FetchData} />
                   <Route path="/forum" component={Forum} />
                   <Route path="/chat" component={Chat} />
                   <Route path="/documents" component={Documents} />
@@ -65,7 +66,7 @@ function Dashboard() {
               </div>
             </Content>
             <Footer style={{ textAlign: "center", fontWeight: "bold" }}>
-              XP3000 designed by Vincent Kouoï
+              Designed by Groupe 5
             </Footer>
           </Layout>
         </Layout>
