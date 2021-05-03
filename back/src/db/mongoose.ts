@@ -24,7 +24,7 @@ const start = async () => {
   }
   try {
     await mongoose.connect(
-      `mongodb+srv://runschool:${process.env.MONGODB_PASSWORD}@cluster0.rqdet.mongodb.net/runschool?retryWrites=true&w=majority`,
+      `mongodb+srv://runschool2:${process.env.MONGODB_PASSWORD}@cluster0.rqdet.mongodb.net/runschool?retryWrites=true&w=majority`,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
