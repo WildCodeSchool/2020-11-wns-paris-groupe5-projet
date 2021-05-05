@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3"
 services:
   # mongodb:
   #   image: mongo
@@ -9,7 +9,7 @@ services:
   #   env_file:
   #     - ./back/config/mongo.env
   backend:
-    build: 
+    build:
       context: ./back
       dockerfile: Dockerfile.dev
     ports:
@@ -32,6 +32,5 @@ services:
     tty: true
     depends_on:
       - backend
-
 # volumes:
 #   data:
