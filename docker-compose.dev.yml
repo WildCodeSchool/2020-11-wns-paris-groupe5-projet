@@ -1,7 +1,7 @@
-version: "3.8"
+version: "3"
 services:
   backend:
-    build: 
+    build:
       context: ./back
       dockerfile: Dockerfile.dev
     ports:
@@ -11,9 +11,9 @@ services:
       - ./back/src:/app/src
     env_file:
       - ./back/config/dev.env
-  
+
   frontend:
-    build: 
+    build:
       context: ./front
       dockerfile: Dockerfile.dev
     ports:
