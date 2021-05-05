@@ -70,3 +70,14 @@ npm run test
 1 - Lancer docker sur votre machine
 2 - Commande dans le terminal : docker-compose up --build 
 ```
+Lancer la version prod en local 
+
+```
+ docker-compose  -f docker-compose.prod.yml up --build
+ ```
+
+ Lancer la version dev en local 
+
+```
+ docker-compose  -f docker-compose.dev.yml up --build
+ ```

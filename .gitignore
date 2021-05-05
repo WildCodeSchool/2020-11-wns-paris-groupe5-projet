@@ -4,3 +4,4 @@ back/.env
 back/config/
 node_modules
 .DS_Store
+back/build

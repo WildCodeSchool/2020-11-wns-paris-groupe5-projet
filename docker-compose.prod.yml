@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+  api:
+    build: 
+      context: ./back
+      dockerfile: Dockerfile
+    ports:
+      - "5000:3000"
+    restart: always
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - /app/node_modules
+      - ./back/src:/app/src
+    env_file:
+      - ./back/config/prod.env
+  
+  frontend:
+    build: ./front
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./front/src:/app/src
+    stdin_open: true
+    tty: true
+    depends_on:
+      - api
+
+  nginx:
+    restart: always
+    build: ./nginx
+    ports:
+      - "3050:80"
