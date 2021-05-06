@@ -1,7 +1,7 @@
 version: "3"
 services:
   api:
-    build:
+    build: 
       context: ./back
       dockerfile: Dockerfile
     ports:
@@ -13,13 +13,8 @@ services:
       - /app/node_modules
       - ./back/src:/app/src
     env_file:
-      - GMAIL_EMAIL=${GMAIL_PASS}
-      - GMAIL_PASS=${GMAIL_PASS}
-      - SMS_USER=${SMS_USER}
-      - SMS_PASS=${SMS_PASS}
-      - JWT_SECRET=${JWT_SECRET}
-      - MONGODB_URL=mongodb://localhost:27017/Runschool
-
+      - ./back/config/prod.env
+  
   frontend:
     build: ./front
     ports:
