@@ -30,4 +30,4 @@ services:
     restart: always
     build: ./nginx
     ports:
-      - 80:80
+      - 8084:80
