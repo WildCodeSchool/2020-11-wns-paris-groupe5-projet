@@ -18,7 +18,7 @@ services:
   frontend:
     build: ./front
     ports:
-      - "3002:3000"
+      - ${GATEWAY_PORT}:3000
     volumes:
       - ./front/src:/app/src
     stdin_open: true
@@ -30,4 +30,4 @@ services:
     restart: always
     build: ./nginx
     ports:
-      - ${GATEWAY_PORT}:80
+      - 80:80
