@@ -12,4 +12,4 @@ ENV MONGODB_URL=mongodb
 ENV GMAIL_EMAIL=thiahanet@gmail.com
 ENV GMAIL_PASS=password
 ENV JWT_KEY=fghjty
-CMD [ "npm", "run", "start" ]
+CMD [ "npm", "run", "dev" ]

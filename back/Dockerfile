@@ -1,7 +1,9 @@
-FROM node:alpine
+FROM node:14.3.0
 WORKDIR /app
 COPY package.json .
-RUN npm install  --only=prod	
+COPY .npmrc .
+RUN npm cache clean --force
+RUN npm install
 COPY . .
 EXPOSE 80
 
@@ -11,5 +13,7 @@ ENV MONGODB_URL=mongodb
 ENV GMAIL_EMAIL=thiahanet@gmail.com
 ENV GMAIL_PASS=password
 ENV JWT_KEY=fghjty
+
+RUN npm run build
 
 CMD [ "npm", "run", "start" ]

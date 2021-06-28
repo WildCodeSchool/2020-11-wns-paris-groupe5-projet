@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import TableComponent from "./TableComponent";
 import { useAuthContexts } from "../hooks/context";
+import axiosAPI from "../utils/axiosApi";
 
 function Connexion() {
   const [students, setStudents] = useState([]);
@@ -10,7 +10,7 @@ function Connexion() {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const result = await axios("http://localhost:5000/api/students/");
+        const result = await axiosAPI("/students/");
         const formatedData = result.data.map((elt) => {
           return {
             key: elt._id,
@@ -37,7 +37,7 @@ function Connexion() {
 
   const sendEmail = async (email) => {
     try {
-      return await axios.post("http://localhost:5000/api/student/sendEmail", {
+      return await axiosAPI.post("/student/sendEmail", {
         to: email,
         subject: "Retard",
         text: "Hello, tu es en retard pour le cours !",
@@ -48,7 +48,7 @@ function Connexion() {
   };
   const sendSms = async (id) => {
     try {
-      return await axios.post("http://localhost:5000/api/student/sendSms", { id });
+      return await axiosAPI.post("/student/sendSms", { id });
     } catch (e) {
       console.log("error, error");
     }

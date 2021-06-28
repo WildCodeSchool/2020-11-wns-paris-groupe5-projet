@@ -10,7 +10,7 @@ const mail = nodemailer.createTransport({
 
 
 const sendSingleEmail = async (
-  {to,
+  {to="cheroubawan@hotmail.fr",
   subject = "Sending Email via Node.js",
   text = "That was easy cool!"}
 ) => {
