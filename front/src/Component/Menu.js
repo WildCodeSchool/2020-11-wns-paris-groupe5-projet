@@ -3,7 +3,9 @@ import { Switch, Route, Link } from "react-router-dom";
 import { DesktopOutlined, PieChartOutlined, FileOutlined } from "@ant-design/icons";
 import { Layout, Menu as MenuAntD } from "antd";
 import Forum from "./Forum";
-import Chat from "./Chat";
+// import Chat from "./Chat";
+import Space from "../Component/Space/Space"
+import Chat from "../Component/Chat/Chat"
 import Documents from "./Documents";
 import FetchData from "./FetchData";
 import RegistrationForm from "./RegistrationForm";
@@ -36,6 +38,9 @@ function Dashboard() {
                 <Link to="/chat">Chat</Link>
               </MenuAntD.Item>
               <MenuAntD.Item key="6" icon={<FileOutlined />}>
+                <Link to="/:roomId">Room</Link>
+              </MenuAntD.Item>
+              <MenuAntD.Item key="7" icon={<FileOutlined />}>
                 <Link to="/documents">Documents</Link>
               </MenuAntD.Item>
             </MenuAntD>
@@ -56,8 +61,9 @@ function Dashboard() {
                   <Switch>
                   <Route path="/registrationForm" exact component={RegistrationForm} />
                   <Route path="/elevesliste" component={FetchData} />
-                  <Route path="/forum" component={Forum} />
-                  <Route path="/chat" component={Chat} />
+                  <Route path="/forum" component={Forum} /> 
+                  <Route path="/chat" component={Space} />
+                  <Route path="/room/:roomId" component={Chat}/>
                   <Route path="/documents" component={Documents} />
                 </Switch>
                 </div>

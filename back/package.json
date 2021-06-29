@@ -6,7 +6,6 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-
     "dev": "env-cmd -f ./config/dev.env npm run build && (tsc -w & nodemon dist/index.js)",
     "test:dev": "env-cmd -f ./config/test.env jest --watch --runInBand",
     "test": "jest --watchAll --no-cache",
@@ -28,6 +27,7 @@
     "@types/cors": "^2.8.9",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/mongoose": "^5.10.3",
+    "@types/socket.io": "^3.0.2",
     "@types/validator": "^13.1.3",
     "bcryptjs": "^2.4.3",
     "cookie-session": "^1.4.0",
@@ -40,6 +40,7 @@
     "mongoose": "^5.10.15",
     "nodemailer": "^6.4.16",
     "request": "^2.88.2",
+    "socket.io": "^4.1.2",
     "ts-node-dev": "^1.1.1",
     "typescript": "^4.1.3",
     "validator": "^13.5.2"
