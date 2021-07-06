@@ -4,6 +4,7 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
 import { useAuthContexts } from "../hooks/context";
+import logo from '../image/logo-books.jpg';
 
 const { Header } = Layout;
 
@@ -22,23 +23,17 @@ const Login = () => {
   return (
     <>
       <Layout style={{ minHeight: "100vh" }}>
-        <Header className="header">
-          <div className="logo" />
-          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-            <Menu.Item key="2">
-              <Link to="/">Home</Link>
-            </Menu.Item>
-          </Menu>
-        </Header>
         <Row justify="space-around" align="middle">
           <Col>
             <Card
-              style={{ marginTop: "5rem" }}
+              style={{ marginTop: "5rem", boxShadow: "rgb(50 50 93 / 25%) 0px 6px 12px -2px" }}
               className="cardlogin"
               justify="space-around"
               align="middle"
             >
-              <h1>Connectez-vous</h1>
+              <img src={logo} alt="Logo" style={{ width: "120px", borderRadius: "50%" }}/>
+              <h1>Run<span style={{ color: "orange" }}>School</span></h1>
+              <h3 style={{ color: "rgb(74 74 74 / 85%)" }}>Connectez-vous</h3>
               <Form
                 name="normal_login"
                 className="login-form"
@@ -73,10 +68,10 @@ const Login = () => {
                 {error && <p style={{ color: "red" }}>{error}</p>}
 
                 <Form.Item>
-                  <Button type="primary" htmlType="submit" className="login-form-button">
+                  <Button type="primary" htmlType="submit" className="login-form-button" style={{ margin: "0 10px 0 10px"}}>
                     Se connecter
                   </Button>
-                  <Link className="link" to={"/registrationForm"}>
+                  <Link className="link" to={"/registrationForm"} style={{ margin: "0 10px 0 10px"}}>
                     {" "}
                     Pas encore inscrit ?
                   </Link>
