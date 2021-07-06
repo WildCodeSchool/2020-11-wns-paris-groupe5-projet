@@ -6,7 +6,7 @@ export const setAxiosToken = (newToken) => {
   token = newToken;
 };
 
-const baseUrl = "http://localhost:5000/api";
+const baseUrl = "https://api.runschool.wns.wilders.dev/api";
 
 const getBearer = () => {
   if (!token) {
