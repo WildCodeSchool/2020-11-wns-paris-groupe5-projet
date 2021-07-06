@@ -64,7 +64,6 @@ function Dashboard() {
               </div>
             </Content>
             <Footer style={{ textAlign: "center", fontWeight: "bold" }}>
-              Designed by Groupe 5
             </Footer>
           </Layout>
         </Layout>
