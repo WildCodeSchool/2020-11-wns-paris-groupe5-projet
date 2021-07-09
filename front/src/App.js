@@ -6,6 +6,11 @@ import Logout from "./Component/Logout";
 import RegistrationForm from "./Component/RegistrationForm";
 import { AuthProvider } from "./hooks/context";
 import { useAuthContexts } from "./hooks/context";
+import PrivateRoute from './Component/PrivateRoute';
+
+function setToken(userToken) {
+  sessionStorage.setItem('token', JSON.stringify(userToken));
+}
 
 const AppParrent = () => {
   return (

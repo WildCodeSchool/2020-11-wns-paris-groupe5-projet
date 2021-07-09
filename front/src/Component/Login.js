@@ -18,6 +18,7 @@ const Login = () => {
       setError(erorLogin.error);
     } catch (error) {}
   };
+
   if (user) return <Redirect to="/" />;
   
   return (
@@ -33,7 +34,7 @@ const Login = () => {
             >
               <img src={logo} alt="Logo" style={{ width: "120px", borderRadius: "50%" }}/>
               <h1>Run<span style={{ color: "orange" }}>School</span></h1>
-              <h3 style={{ color: "rgb(74 74 74 / 85%)" }}>Connectez-vous</h3>
+              <h4 style={{ color: "rgb(74 74 74 / 85%)", marginTop: "20px" }}>Connectez-vous</h4>
               <Form
                 name="normal_login"
                 className="login-form"
